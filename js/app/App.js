@@ -121,8 +121,13 @@ export default class Paint {
   }
 
   handleSelectColor(e) {
+    const li = document.querySelectorAll('.palette__color-item');
+
+    for (let i = 0; i < li.length; i += 1) {
+      li[i].classList.remove('active');
+    }
     const target = e.target;
-    if (target.tagName === 'LI' && target.classList.contains('palette__color-item')) {
+    if (target.tagName === 'LI') {
       target.classList.toggle('active');
       this.strokeStyle = target.dataset.color;
     }
