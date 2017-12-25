@@ -5,7 +5,7 @@ import Palette from './app/ColorPalette';
 const drawer = new Paint({
   elem: document.getElementById('canvas'),
   controls: new Controls({
-    lineWidth: 4,
+    lineWidth: 3,
     minValue: 1,
     maxValue: 10
   }),

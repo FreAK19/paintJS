@@ -12,6 +12,7 @@ body {
 
 .row {
   margin: 50px auto 10px;
+  position: relative;
 }
 
 canvas {
@@ -62,71 +63,24 @@ button {
 }
 
 /* Color Picker */
-
-#color-picker {
-  background: #fff;
-  border-radius: 5px;
-  clear: both;
-  margin: 20px 0 0;
-  padding: 10px;
-  width: 305px;
-  position: relative;
-  display: none;
-}
-
-#color-picker:after {
-  bottom: 100%;
-  left: 24px;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(255, 255, 255, 0);
-  border-bottom-color: #fff;
-  border-width: 10px;
-  margin-left: -10px;
-}
-
-.color-picker__preview {
-  width: 80px;
-  height: 80px;
-  border-radius: 3px;
-  box-shadow: none;
-  float: left;
-  border: none;
-  margin: 10px 20px 20px 10px;
-}
-
-.color-picker__sliders {
-  float: right;
-}
-
-.color-picker__sliders label {
-  vertical-align: middle;
-  display: block;
-  margin: 0 10px 0 0;
-  font-size: 14px;
-  color: #6D574E;
-}
-
-.color-picker__sliders input {
-  position: relative;
-  top: 2px;
-}
-
-.color-picker__controls {
-  clear: both;
-  display: flex;
-  justify-content: space-between;
-}
-
 .box {
   width: 320px;
   padding: 1rem;
   background: #fff;
   border-radius: 2px;
   box-shadow: 1px 0 10px #251e1e;
+  position: absolute;
+  left: -250px;
+  bottom: 75px;
+  transition: all 0.4s;
+}
+
+.show.box {
+  display: block;
+}
+
+.hidden.box {
+  display: none;
 }
 
 .box__heading {
@@ -153,13 +107,13 @@ button {
 .palette__color-item:hover {
   cursor: pointer;
   background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%3E%3Cpath%20d%3D%22M504.5%2075.5c-10-10-26.2-10-36.2%200L161.6%20382.2%2043.7%20264.3c-10-10-26.2-10-36.2%200%20-10%2010-10%2026.2%200%2036.2l136%20136c10%2010%2026.2%2010%2036.2%200L504.5%20111.7C514.5%20101.7%20514.5%2085.5%20504.5%2075.5z%22%20data-original%3D%22%23000000%22%20class%3D%22active-path%22%20data-old_color%3D%22%23F2F2F2%22%20fill%3D%22%23FFF%22/%3E%3C/svg%3E) no-repeat center;
-  background-size: 60% 60%;
+  background-size: 42% 42%;
   z-index: 9999;
 }
 
 .active.palette__color-item:after {
   content: " ";
-  background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%3E%3Cpath%20d%3D%22M504.5%2075.5c-10-10-26.2-10-36.2%200L161.6%20382.2%2043.7%20264.3c-10-10-26.2-10-36.2%200%20-10%2010-10%2026.2%200%2036.2l136%20136c10%2010%2026.2%2010%2036.2%200L504.5%20111.7C514.5%20101.7%20514.5%2085.5%20504.5%2075.5z%22%20data-original%3D%22%23000000%22%20class%3D%22active-path%22%20data-old_color%3D%22%23F2F2F2%22%20fill%3D%22%23FFF%22/%3E%3C/svg%3E) rgba(0, 0, 0, 0.24) no-repeat center;
+  background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%3E%3Cpath%20d%3D%22M504.5%2075.5c-10-10-26.2-10-36.2%200L161.6%20382.2%2043.7%20264.3c-10-10-26.2-10-36.2%200%20-10%2010-10%2026.2%200%2036.2l136%20136c10%2010%2026.2%2010%2036.2%200L504.5%20111.7C514.5%20101.7%20514.5%2085.5%20504.5%2075.5z%22%20data-original%3D%22%23000000%22%20class%3D%22active-path%22%20data-old_color%3D%22%23F2F2F2%22%20fill%3D%22%23FFF%22/%3E%3C/svg%3E) no-repeat center;
   background-size: 60% 60%;
   width: 35px;
   height: 35px;
@@ -169,4 +123,13 @@ button {
   transform: translate(-50%, -50%);
   border-radius: 100%;
   text-align: center;
+}
+
+.triangle-down {
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #fff;
+  position: absolute;
+  bottom: -20px;
+  right: 43px;
 }
