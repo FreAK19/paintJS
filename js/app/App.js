@@ -11,11 +11,18 @@ export default class Paint {
 
   buildControlsDOM() {
     const fragment = document.createDocumentFragment();
-    const div = new Element('div', { class: 'controls' }).render();
-    const btnPalette = new Element('button', { id: 'new-color-button' }).render();
-    const paletteIcon = new Element('i', { class: 'material-icons' }).render();
-    const btnClear = new Element('button', { id: 'clear-canvas-button' }).render();
-    const clearIcon = new Element('i', { class: 'material-icons' }).render();
+    const div = new Element('div', {class: 'controls'}).render();
+    const btnPalette = new Element('button', {id: 'new-color-button'}).render();
+    const paletteIcon = new Element('i', {class: 'material-icons'}).render();
+    const btnClear = new Element('button', {id: 'clear-canvas-button'}).render();
+    const clearIcon = new Element('i', {class: 'material-icons'}).render();
+    const input = new Element('input', {
+      type: 'range',
+      id: 'brush-size-slider',
+      min: this.controls.minValue.toString(),
+      max: this.controls.maxValue.toString(),
+      value: this.controls.widthStrokeValue.toString()
+    }).render();
 
     paletteIcon.textContent = 'palette';
     clearIcon.textContent = 'clear';
@@ -23,6 +30,7 @@ export default class Paint {
     btnClear.appendChild(clearIcon);
     div.append(btnPalette);
     div.append(btnClear);
+    div.append(input);
     fragment.appendChild(div);
 
     this.elem.after(fragment);
@@ -62,5 +70,4 @@ export default class Paint {
   handleMouseLeave() {
       this.isDrawing = false;
   }
-
 }
