@@ -4,7 +4,7 @@ import Controls from './app/Controls';
 const drawer = new Paint({
   elem: document.getElementById('canvas'),
   controls: new Controls({
-    widthStrokeValue: 4,
+    lineWidth: 4,
     minValue: 1,
     maxValue: 10
   })
