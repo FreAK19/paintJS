@@ -1,9 +1,10 @@
 import Element from './Elementator';
 
 export default class Paint {
-  constructor({elem, controls}) {
+  constructor({elem, controls, palette}) {
     this.isDrawing = false;
     this.controls = controls;
+    this.palette = palette.palette.colors;
     this.elem = elem;
     this.ctx = elem.getContext('2d');
 
@@ -42,9 +43,29 @@ export default class Paint {
     this.slider = input;
   }
 
+  buildPaletteDOM() {
+    const box = new Element('div', {class: 'box'}).render();
+    const heading = new Element('p', {class: 'box__heading'}).render();
+    const ul = new Element('ul', {id: 'color-palette', class: 'palette'}).render();
+
+    for (let i = 0; i < this.palette.length; i += 1) {
+      let y = new Element('li', {
+        class: 'palette__color-item',
+        style: `background-color: ${this.palette[i]}`
+      }).render();
+      ul.appendChild(y);
+    }
+    heading.textContent = 'Choose a color:';
+    box.appendChild(heading);
+    box.appendChild(ul);
+    this.elem.after(box);
+    this.listPalette = ul;
+  }
+
   init() {
     if (this.controls) {
-      this.buildControlsDOM()
+      this.buildControlsDOM();
+      this.buildPaletteDOM();
     }
     this.elem.addEventListener('mousedown', this.handleMouseDown.bind(this));
     this.elem.addEventListener('mouseup', this.handleMouseUp.bind(this));
@@ -92,5 +113,4 @@ export default class Paint {
   handleBrushSizeChange(e) {
     this.lineWidth = e.target.value;
   }
-
 }

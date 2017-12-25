@@ -4,11 +4,4 @@ export default class Controls {
     this.minValue = minValue;
     this.maxValue = maxValue;
   }
-
-  init() {
-    this.btnClear.addEventListener('click', () => {
-      console.log(this)
-    })
-  }
-
 }

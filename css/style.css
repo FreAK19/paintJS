@@ -43,19 +43,7 @@ button {
   color: #384047;
 }
 
-
-
 /* Color Palette */
-
-#color-palette {
-  display: flex;
-  flex-direction: column;
-  list-style:none;
-  margin: 0;
-  float: 	left;
-  padding: 0 10px;
-  text-align: center;
-}
 
 .color-palette__color {
   height: 48px;
@@ -72,8 +60,6 @@ button {
   width: 40px;
   height: 40px;
 }
-
-
 
 /* Color Picker */
 
@@ -135,14 +121,52 @@ button {
   justify-content: space-between;
 }
 
-.color-picker__controls button {
-
+.box {
+  width: 320px;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 1px 0 10px #251e1e;
 }
 
-.color-picker__add-button {
-
+.box__heading {
+  font-weight: bold;
 }
 
-.color-picker__close-button {
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0 0 1rem;
+}
 
+.palette__color-item {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background: green;
+  border-radius: 100%;
+  margin: 0 10px 10px 0;
+}
+
+.palette__color-item:hover {
+  cursor: pointer;
+  background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%3E%3Cpath%20d%3D%22M504.5%2075.5c-10-10-26.2-10-36.2%200L161.6%20382.2%2043.7%20264.3c-10-10-26.2-10-36.2%200%20-10%2010-10%2026.2%200%2036.2l136%20136c10%2010%2026.2%2010%2036.2%200L504.5%20111.7C514.5%20101.7%20514.5%2085.5%20504.5%2075.5z%22%20data-original%3D%22%23000000%22%20class%3D%22active-path%22%20data-old_color%3D%22%23F2F2F2%22%20fill%3D%22%23FFF%22/%3E%3C/svg%3E) no-repeat center;
+  background-size: 60% 60%;
+  z-index: 9999;
+}
+
+.active.palette__color-item:after {
+  content: " ";
+  background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%3E%3Cpath%20d%3D%22M504.5%2075.5c-10-10-26.2-10-36.2%200L161.6%20382.2%2043.7%20264.3c-10-10-26.2-10-36.2%200%20-10%2010-10%2026.2%200%2036.2l136%20136c10%2010%2026.2%2010%2036.2%200L504.5%20111.7C514.5%20101.7%20514.5%2085.5%20504.5%2075.5z%22%20data-original%3D%22%23000000%22%20class%3D%22active-path%22%20data-old_color%3D%22%23F2F2F2%22%20fill%3D%22%23FFF%22/%3E%3C/svg%3E) rgba(0, 0, 0, 0.24) no-repeat center;
+  background-size: 60% 60%;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  text-align: center;
 }
