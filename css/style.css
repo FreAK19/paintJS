@@ -6,11 +6,11 @@ body {
 #app {
   max-width: 720px;
   margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .row {
-  display: flex;
-  flex-wrap: wrap;
   margin: 50px auto 10px;
 }
 
