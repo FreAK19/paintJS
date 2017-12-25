@@ -29,7 +29,8 @@ button {
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  box-shadow: 2px 2px 0 0 #B7B7B7;
+  box-shadow: 2px 2px 7px 0 #222222;
+  background: #2196f3;;
 }
 
 .controls {
@@ -37,29 +38,11 @@ button {
 }
 
 .controls button {
-  height: 48px;
-  width: 48px;
+  height: 50px;
+  width: 50px;
   margin-right: 8px;
-  border-radius: 25%;
-  color: #384047;
-}
-
-/* Color Palette */
-
-.color-palette__color {
-  height: 48px;
-  width: 48px;
-  margin-bottom: 8px;
-  border-radius: 60px;
-  cursor: pointer;
-  border: 0;
-  box-shadow: 0 3px 0 0 #222;
-}
-
-.color-palette__color.selected {
-  border: 4px solid #fff;
-  width: 40px;
-  height: 40px;
+  border-radius: 100%;
+  color: #fff;
 }
 
 /* Color Picker */
@@ -132,4 +115,50 @@ button {
   position: absolute;
   bottom: -20px;
   right: 43px;
+}
+
+/* Styles for input type=range */
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin-left: 2rem;
+  width: 30%;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  cursor: pointer;
+  background: #03a9f4;
+  height: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0 4px #03a9f4;
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+  background: #03a9f4;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7px;
+}
+
+/* Mozila slider */
+
+input[type=range]::-moz-range-track {
+  height: 3px;
+  cursor: pointer;
+  background: #03a9f4;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 4px #03a9f4;
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+  background: #03a9f4;
+  cursor: pointer;
 }
