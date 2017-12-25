@@ -1,0 +1,149 @@
+body {
+  background: #384047;
+  font-family: sans-serif;
+}
+
+#app {
+  max-width: 720px;
+  margin: auto;
+}
+
+.row {
+  display: flex;
+  margin: 50px auto 10px;
+}
+
+canvas {
+  background: #fff;
+  display: block;
+  border-radius: 5px;
+  box-shadow: 0 4px 0 0 #222;
+  cursor: url(../img/cursor.png), crosshair;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 0 0 #B7B7B7;
+}
+
+.controls {
+
+}
+
+.controls button {
+  height: 48px;
+  width: 48px;
+  margin-right: 8px;
+  border-radius: 100%;
+  color: #384047;
+}
+
+
+
+/* Color Palette */
+
+#color-palette {
+  display: flex;
+  flex-direction: column;
+  list-style:none;
+  margin: 0;
+  float: 	left;
+  padding: 0px 10px;
+  text-align: center;
+}
+
+.color-palette__color {
+  height: 48px;
+  width: 48px;
+  margin-bottom: 8px;
+  border-radius: 60px;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0 3px 0 0 #222;
+}
+
+.color-palette__color.selected {
+  border: 4px solid #fff;
+  width: 40px;
+  height: 40px;
+}
+
+
+
+/* Color Picker */
+
+#color-picker {
+  background: #fff;
+  border-radius: 5px;
+  clear: both;
+  margin: 20px 0 0;
+  padding: 10px;
+  width: 305px;
+  position: relative;
+  display: none;
+}
+
+#color-picker:after {
+  bottom: 100%;
+  left: 24px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #fff;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.color-picker__preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  box-shadow: none;
+  float: left;
+  border: none;
+  margin: 10px 20px 20px 10px;
+}
+
+.color-picker__sliders {
+  float: right;
+}
+
+.color-picker__sliders label {
+  margin: 8px 0;
+  vertical-align: middle;
+  display: block;
+  margin: 0 10px 0 0;
+  font-size: 14px;
+  color: #6D574E;
+}
+
+.color-picker__sliders input {
+  position: relative;
+  top: 2px;
+}
+
+.color-picker__controls {
+  clear: both;
+  display: flex;
+  justify-content: space-between;
+}
+
+.color-picker__controls button {
+
+}
+
+.color-picker__add-button {
+
+}
+
+.color-picker__close-button {
+
+}
