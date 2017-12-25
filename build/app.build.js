@@ -78,14 +78,21 @@ var _Controls = __webpack_require__(2);
 
 var _Controls2 = _interopRequireDefault(_Controls);
 
+var _ColorPalette = __webpack_require__(4);
+
+var _ColorPalette2 = _interopRequireDefault(_ColorPalette);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var drawer = new _App2.default({
   elem: document.getElementById('canvas'),
   controls: new _Controls2.default({
-    widthStrokeValue: 4,
+    lineWidth: 3,
     minValue: 1,
     maxValue: 10
+  }),
+  palette: new _ColorPalette2.default({
+    colors: ['#f6402c', '#eb1460', '#9c1ab1', '#6633b9', '#3d4db7', '#46af4a', '#009687', '#00a6f6', '#00bbd5', '#1093f5', '#88c440', '#ccdd1e', '#ffec16', '#ffc100', '#ff9800', '#000000', '#5e7c8b', '#9d9d9d', '#7a5547', '#ff5505']
   })
 });
 
@@ -113,14 +120,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Paint = function () {
   function Paint(_ref) {
     var elem = _ref.elem,
-        controls = _ref.controls;
+        controls = _ref.controls,
+        palette = _ref.palette;
 
     _classCallCheck(this, Paint);
 
     this.isDrawing = false;
     this.controls = controls;
+    this.palette = palette.palette.colors;
     this.elem = elem;
     this.ctx = elem.getContext('2d');
+
+    this.lineWidth = this.controls.lineWidth;
+    this.strokeStyle = '#000';
+
     this.init();
   }
 
@@ -138,7 +151,7 @@ var Paint = function () {
         id: 'brush-size-slider',
         min: this.controls.minValue.toString(),
         max: this.controls.maxValue.toString(),
-        value: this.controls.widthStrokeValue.toString()
+        value: this.controls.lineWidth.toString()
       }).render();
 
       paletteIcon.textContent = 'palette';
@@ -151,17 +164,47 @@ var Paint = function () {
       fragment.appendChild(div);
 
       this.elem.after(fragment);
+      this.btnClear = btnClear;
+      this.btnPallete = btnPalette;
+      this.slider = input;
+    }
+  }, {
+    key: 'buildPaletteDOM',
+    value: function buildPaletteDOM() {
+      var box = new _Elementator2.default('div', { class: 'box hidden' }).render();
+      var heading = new _Elementator2.default('p', { class: 'box__heading' }).render();
+      var ul = new _Elementator2.default('ul', { id: 'color-palette', class: 'palette' }).render();
+      var triangle = new _Elementator2.default('div', { class: 'triangle-down' }).render();
+      for (var i = 0; i < this.palette.length; i += 1) {
+        var y = new _Elementator2.default('li', {
+          class: 'palette__color-item',
+          style: 'background-color: ' + this.palette[i],
+          'data-color': '' + this.palette[i]
+        }).render();
+        ul.appendChild(y);
+      }
+      heading.textContent = 'Choose a color:';
+      box.appendChild(heading);
+      box.appendChild(ul);
+      box.appendChild(triangle);
+      this.elem.after(box);
+      this.listPalette = box;
     }
   }, {
     key: 'init',
     value: function init() {
       if (this.controls) {
         this.buildControlsDOM();
+        this.buildPaletteDOM();
       }
       this.elem.addEventListener('mousedown', this.handleMouseDown.bind(this));
       this.elem.addEventListener('mouseup', this.handleMouseUp.bind(this));
       this.elem.addEventListener('mousemove', this.handleMouseMove.bind(this));
       this.elem.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+      this.btnClear.addEventListener('click', this.handleClearCanvas.bind(this));
+      this.btnPallete.addEventListener('click', this.handleShowPalette.bind(this));
+      this.slider.addEventListener('change', this.handleBrushSizeChange.bind(this));
+      this.listPalette.addEventListener('click', this.handleSelectColor.bind(this));
     }
   }, {
     key: 'handleMouseDown',
@@ -179,9 +222,11 @@ var Paint = function () {
     key: 'handleMouseMove',
     value: function handleMouseMove(e) {
       if (this.isDrawing) {
+        this.ctx.lineWidth = this.lineWidth;
+        this.ctx.strokeStyle = this.strokeStyle;
         this.ctx.beginPath();
         this.ctx.moveTo(this.x, this.y);
-        this.ctx.lineTo(e.offsetX, e.offsetY);
+        this.ctx.lineTo(e.offsetX + 0.1, e.offsetY + 0.1);
         this.ctx.stroke();
         this.ctx.closePath();
         this.x = e.offsetX;
@@ -192,6 +237,35 @@ var Paint = function () {
     key: 'handleMouseLeave',
     value: function handleMouseLeave() {
       this.isDrawing = false;
+    }
+  }, {
+    key: 'handleClearCanvas',
+    value: function handleClearCanvas() {
+      this.ctx.clearRect(0, 0, this.elem.width, this.elem.height);
+    }
+  }, {
+    key: 'handleShowPalette',
+    value: function handleShowPalette() {
+      this.listPalette.classList.toggle('hidden');
+    }
+  }, {
+    key: 'handleBrushSizeChange',
+    value: function handleBrushSizeChange(e) {
+      this.lineWidth = e.target.value;
+    }
+  }, {
+    key: 'handleSelectColor',
+    value: function handleSelectColor(e) {
+      var li = document.querySelectorAll('.palette__color-item');
+
+      for (var i = 0; i < li.length; i += 1) {
+        li[i].classList.remove('active');
+      }
+      var target = e.target;
+      if (target.tagName === 'LI') {
+        target.classList.toggle('active');
+        this.strokeStyle = target.dataset.color;
+      }
     }
   }]);
 
@@ -211,37 +285,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Controls = function () {
-  function Controls(_ref) {
-    var widthStrokeValue = _ref.widthStrokeValue,
-        minValue = _ref.minValue,
-        maxValue = _ref.maxValue;
+var Controls = function Controls(_ref) {
+  var lineWidth = _ref.lineWidth,
+      minValue = _ref.minValue,
+      maxValue = _ref.maxValue;
 
-    _classCallCheck(this, Controls);
+  _classCallCheck(this, Controls);
 
-    this.widthStrokeValue = widthStrokeValue;
-    this.minValue = minValue;
-    this.maxValue = maxValue;
-    this.btnClear = document.getElementById('clear-canvas-button');
-  }
-
-  _createClass(Controls, [{
-    key: 'init',
-    value: function init() {
-      var _this = this;
-
-      this.btnClear.addEventListener('click', function () {
-        console.log(_this);
-      });
-    }
-  }]);
-
-  return Controls;
-}();
+  this.lineWidth = lineWidth;
+  this.minValue = minValue;
+  this.maxValue = maxValue;
+};
 
 exports.default = Controls;
 
@@ -275,7 +331,7 @@ var Element = function () {
       var elem = document.createElement(this.tagName);
       for (var attr in this.attrs) {
         if (attr === 'class') {
-          elem.classList.add(this.attrs[attr]);
+          elem.className = this.attrs[attr];
         }
         elem.setAttribute(attr, this.attrs[attr]);
       }
@@ -287,6 +343,27 @@ var Element = function () {
 }();
 
 exports.default = Element;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Palette = function Palette(colors) {
+  _classCallCheck(this, Palette);
+
+  this.palette = colors;
+};
+
+exports.default = Palette;
 
 /***/ })
 /******/ ]);
