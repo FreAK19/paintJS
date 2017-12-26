@@ -1,6 +1,7 @@
 import Paint from './app/App';
 import Controls from './app/Controls';
 import Palette from './app/ColorPalette';
+import Tools from './app/Tools';
 
 const drawer = new Paint({
   elem: document.getElementById('canvas'),
@@ -16,5 +17,6 @@ const drawer = new Paint({
       '#88c440', '#ccdd1e', '#ffec16', '#ffc100', '#ff9800',
       '#000000', '#5e7c8b', '#9d9d9d', '#7a5547', '#ff5505',
     ]
-  })
+  }),
+  tools: new Tools()
 });
